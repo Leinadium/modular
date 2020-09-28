@@ -2,7 +2,7 @@ from classes.jogador import Jogador
 import unittest
 
 
-class MyTestCase(unittest.TestCase):
+class TestesJogador(unittest.TestCase):
     # def test_something(self):
     #     self.assertEqual(True, False)
 
@@ -16,10 +16,15 @@ class MyTestCase(unittest.TestCase):
         status = jog.rodar_dado()
         self.assertEqual(status, 0)
 
-    def test_jogador_vitoria(self):
+    def test_jogador_vitoria_true(self):
         jog = Jogador('red', 'teste')
         jog.peoes_finalizados = 4
         self.assertEqual(jog.checa_vitoria(), True)
+
+    def test_jogador_vitoria_false(self):
+        jog = Jogador('red', 'teste')
+        jog.peoes_finalizados = 3
+        self.assertEqual(jog.checa_vitoria(), False)
 
 
 if __name__ == '__main__':
