@@ -31,6 +31,7 @@ class TestesPeao(unittest.TestCase):
         self.assertEqual(entidades.peao.atualizar_peao(x, 10), 0)
         a = entidades.peao.acessar_peoes(pos=10)
         self.assertEqual(len(a), 1)
+        self.assertEqual(entidades.peao.atualizar_peao(1000, 1000), 1)
 
 
 if __name__ == '__main__':
