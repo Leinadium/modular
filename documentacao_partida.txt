@@ -1,0 +1,17 @@
+Partida:
+	Criar Partida:
+		jogadores.limpar_jogadores()
+		peoes.limpar_peoes()
+		CRIAR JOGADORES: criar_jogador(cor)
+		PEGAR POSIÇÕES INICIAIS: tabuleiro.posicoes_iniciais()
+		CRIAR PEÕES: criar_peão(pos)
+
+	Rodada(jogador):
+		RODAR DADO: dado.rodar_dado()
+		PEGAR PEOES DO JOGADOR: jogador.acessar_peoes(jogador)
+		DESCOBRIR SE O PEAO É JOGAVEL: tabuleiro.movimentacao_possivel(pos, mov)
+		ESCOLHER PEAO A SER JOGADO: graficos...
+		MOVER PEÃO: peao.atualiazar_peao(id, pos)
+		VERIFICAR SOBREPOSICAO: tabuleiro.posicao_seguras()
+								peao.acessar_peoes(pos)
+		MOVER PEÃO COMIDO: peao.atualizar_peao(id, pos)
