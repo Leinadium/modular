@@ -1,5 +1,32 @@
 import unittest
 import entidades.peao
+import entidades.jogador
+
+
+class TestesJogador(unittest.TestCase):
+    def test_limpar_jogadores(self):
+        self.assertEqual(entidades.jogador.limpar_jogadores(), 0, 'limpando jogadores')
+
+    def test_criar_jogador(self):
+        self.assertEqual(entidades.jogador.criar_jogador('red', []), 0, 'criando jogadores')
+
+    def test_acessar_jogador(self):
+        entidades.jogador.limpar_jogadores()
+        entidades.jogador.criar_jogador('red', [1, 2, 3])
+        self.assertEqual(entidades.jogador.acessar_jogador('red'),
+                         {'cor': 'red', 'peoes': [1, 2, 3]}, 'acessando jogador')
+
+        entidades.jogador.criar_jogador('red', [])
+        self.assertEqual(entidades.jogador.acessar_jogador('red'), 2, 'dois jogadores iguais')
+        self.assertEqual(entidades.jogador.acessar_jogador('vermelho'), 1, 'nenhum jogador')
+
+    def test_jogador_encapsulamento(self):
+        entidades.jogador.limpar_jogadores()
+        entidades.jogador.criar_jogador('red', [1])
+        x = entidades.jogador.acessar_jogador('red')
+        x['peoes'].append(2)
+        y = entidades.jogador.acessar_jogador('red')
+        self.assertNotEqual(x, y, 'encapsulamento jogador')
 
 
 class TestesPeao(unittest.TestCase):
