@@ -15,12 +15,14 @@ Partida:
 Peao:
     limpar_peoes() -> int
     criar_peao(cor) -> id
+    acessar_peao(id) -> cor
 
 Tabuleiro:
     iniciar_tabuleiro(n) -> int
     adicionar_peoes(lista_ids, lista_posicoes=None) -> int
     movimentacao_possivel(id_ mov) -> int
-    acessar_posicao(pos) -> id
+    mover_peao(id, mov) -> pos | int
+    acessar_posicao(pos) -> lista <id> | int
     reiniciar_peao(id) -> 0
 
 Dado:
