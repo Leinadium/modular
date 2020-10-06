@@ -30,6 +30,14 @@ def criar_peao(cor):
     return peao['id']
 
 
+def acessar_peao(id_peao):
+    """Acessa a cor do peao. '' se nao existir esse id."""
+    for p in peoes:
+        if p['id'] == id_peao:
+            return p['cor']
+    return ''
+
+
 '''
 def acessar_peoes(pos=-1, cor='', id_peao=-1):
     """Retorna uma lista dos id dos peoes daquela cor ou na posicao."""
