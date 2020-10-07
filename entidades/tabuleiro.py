@@ -3,37 +3,40 @@ Modulo Tabuleiro.
 lista_posicao_iniciais
 lista_posicao_seguras
 lista_posicao_finais
-
 tabela_peoes:
     id <id> -> id dos peoes
     pos <int> -> posicao atual do peao
     pos_inicial <int> -> posicao original do peao
     eh_finalizado <bool> -> se ja foi até o fim
     eh_inicio <bool> -> esta na origem
+
+Esquema da numeracao das casas:
+    casas normais: 0 .. 13*n - 1
+
+    # casas iniciais: 100*i + j
+    i (jogador): 1 .. n, j: 0 .. m
+
+    casas finais: 1000*n + j
+    i (jogador): 1 .. n, j: 0 .. 5 (onde 5 eh a casa final)
+
+    casas seguras: 13*i e 13*i + 8, i: 0 .. 3
 """
-
-# casas normais: 0 .. 13*n - 1
-
-# casas iniciais: 100*i + j
-#  i (jogador): 1 .. n, j: 0 .. m
-
-# casas finais: 1000*n + j
-#  i (jogador): 1 .. n, j: 0 .. 5 (onde 5 eh a casa final)
-
-# casas seguras: 13*i e 13*i + 8, i: 0 .. 3
-
 
 N_CORES = 4  # definindo o default do numero de jogadores como 4
 N_PEOES = 4  # definindo o default do numero de peoes por jogador como 4
+ID_CASA_FINAL = 1000  # as casas finais comecam em um multiplo de 1000
+ID_CASA_INICIAL = 100  # as casas iniciais comecam em um multiplo de 100
 lista_posicao_iniciais = []  # lista de pos do inicio
-lista_posicao_seguras = []
-lista_posicao_finais = []
-tabela_peoes = []
-cores_acrescentadas = 0
+lista_posicao_seguras = []  # lista de posicoes onde nao se pode comer
+lista_posicao_finais = []  # lista de posicoes finais do tabuleiro (ultima casa possivel)
+tabela_peoes = []  # lista para guardar as informacoes do peao
+cores_acrescentadas = 0   # contador para adicionar peoes. +1 para cada cor acrescentada.
 
 
 def __achar_peao(id_peao):
-    """Recebe um id, retorna a posicao na tabela, -1 se nao existir."""
+    """
+    Recebe um id, retorna a posicao na tabela, -1 se nao existir.
+    """
     for i, p in enumerate(tabela_peoes):
         if p['id'] == id_peao:
             return i
@@ -41,15 +44,19 @@ def __achar_peao(id_peao):
 
 
 def __definir_posicoes_iniciais(n, m=N_PEOES):
-    """Recebe um numero n (ate 9) de jogadores, retorna uma lista de n elementos,
-    em que cada elemento eh uma lista das posicoes m das casas iniciais"""
+    """
+    Recebe um numero n (ate 9) de jogadores, retorna uma lista de n elementos,
+    em que cada elemento eh uma lista das posicoes m das casas iniciais.
+    """
     global lista_posicao_iniciais
-    lista_posicao_iniciais = [[x * 100 + y for y in range(m)] for x in range(1, n + 1)]
+    lista_posicao_iniciais = [[x * ID_CASA_INICIAL + y for y in range(m)] for x in range(1, n + 1)]
     return
 
 
 def __definir_posicoes_seguras(n):
-    """Recebe o numero de jogadores, e retorna a lista de posicoes de casas seguras."""
+    """
+    Recebe o numero de jogadores, e salva a lista de posicoes de casas seguras.
+    """
     global lista_posicao_seguras
     lista_posicao_seguras.clear()
     for i in range(n):
@@ -59,13 +66,19 @@ def __definir_posicoes_seguras(n):
 
 
 def __definir_posicoes_finais(n):
+    """
+    Recebe o numero de jogadores, e salva a lista das ultimas posicoes (casa final).
+    """
     global lista_posicao_finais
-    lista_posicao_finais = [1000 * n + 5 for n in range(1, n + 1)]
+    lista_posicao_finais = []
+    lista_posicao_finais = [ID_CASA_FINAL * n + 5 for n in range(1, n + 1)]
     return
 
 
 def iniciar_tabuleiro(n=N_CORES):
-    """Recebe o numero de jogadores, e inicia o tabuleiro. Retorna 0."""
+    """
+    Recebe o numero de jogadores, e inicia o tabuleiro. Retorna 0.
+    """
     global cores_acrescentadas, N_CORES
     __definir_posicoes_iniciais(n)
     __definir_posicoes_seguras(n)
@@ -76,8 +89,13 @@ def iniciar_tabuleiro(n=N_CORES):
 
 
 def adicionar_peoes(lista_ids, lista_posicoes=None):
-    """Recebe uma lista de peoes e uma lista de posicoes atuais e salva na tabela.
-        Retorna 0 se sucesso, 1 se id repitido, 2 se erro."""
+    """
+    Recebe uma lista de peoes e uma lista de posicoes atuais e salva na tabela.
+    Retorna 0 se sucesso,
+    1 se id repetido,
+    2 se lista de posicoes invalida,
+    3 se ja foram acrescentadas todas as cores,
+    """
 
     global cores_acrescentadas
     # tamanhos de listas diferentes
@@ -86,7 +104,7 @@ def adicionar_peoes(lista_ids, lista_posicoes=None):
 
     # ja acrescentaram todas as cores
     if cores_acrescentadas == N_CORES:
-        return 2
+        return 3
 
     # quantidade de um time diferente de quantidade definida de peoes
     if len(lista_ids) != N_PEOES:
@@ -117,15 +135,19 @@ def adicionar_peoes(lista_ids, lista_posicoes=None):
 
 
 def acessar_posicao(pos):
-    """Retorna uma lista dos ids naquela posicao, 0 se a casa for segura"""
+    """Retorna uma lista dos ids naquela posicao, 0 se a casa for segura."""
     if pos in lista_posicao_seguras:
         return 0
+    # pega o id do x da tabela se x esta na posicao 'pos'
     return [x['id'] for x in tabela_peoes if x['pos'] == pos]
 
 
 def reiniciar_peao(id_peao):
-    """Realoca o peao para a posicao inicial, reiniciando seus dados.
-    0 se sucesso, -1 se nao houver esse id. """
+    """
+    Realoca o peao para a posicao inicial, reiniciando seus dados.
+    0 se sucesso,
+    -1 se nao houver esse id.
+    """
     i = __achar_peao(id_peao)
     if i == -1:
         return -1
@@ -138,7 +160,13 @@ def reiniciar_peao(id_peao):
 
 
 def movimentacao_possivel(id_peao, mov):
-    """0 se for possivel, 1 se impossivel, 2 se finalizado,  -1 se nao existir esse id."""
+    """
+    Retorna se eh possivel movimentar o peao.
+    0 se for possivel,
+    1 se impossivel,
+    2 se finalizado
+    -1 se nao existir esse id.
+    """
     i = __achar_peao(id_peao)
     if i == -1:
         return -1
@@ -163,9 +191,14 @@ def movimentacao_possivel(id_peao, mov):
 
 
 def mover_peao(id_peao, mov):
-    """Move o peao, retorna a posicao final,
-    ou -1 se o id nao existir, ou -2 se o peao chegou no fim.
-    A movimentacao deve ter sido validade pelo movimento_possivel."""
+    """
+    Move o peao. Admite-se que a movimentacao ja foi validade. Retorna:
+    posicao se o movimento foi feito com sucesso,
+    -1 se o id nao existir,
+    -2 se o peao chegou na ultima casa.
+
+    OBS: nunca retornara a posicao da ultima casa.
+    """
 
     i = __achar_peao(id_peao)
     if i == -1:
@@ -187,14 +220,12 @@ def mover_peao(id_peao, mov):
         p['pos'] = new_pos
         if new_pos % 1000 == 5:
             p['eh_finalizado'] = True
-            # print(p)
             return -2
         return new_pos
 
     # primeiro calcula a casa para entrar na reta final
     casa_entrada = (13*(time-1) + 50) % 52  # primeira casa + 50, dando a volta
     new_pos = (pos + mov)  # primeiro vejo sem dar a volta
-
     if pos <= casa_entrada < new_pos:  # ele deve entrar na reta final
         new_pos = (new_pos - casa_entrada - 1) + time*1000
     else:
