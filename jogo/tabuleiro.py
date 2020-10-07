@@ -33,7 +33,7 @@ tabela_peoes = []  # lista para guardar as informacoes do peao
 cores_acrescentadas = 0   # contador para adicionar peoes. +1 para cada cor acrescentada.
 
 
-def __achar_peao(id_peao):
+def _achar_peao(id_peao):
     """
     Recebe um id, retorna a posicao na tabela, -1 se nao existir.
     """
@@ -43,7 +43,7 @@ def __achar_peao(id_peao):
     return -1
 
 
-def __definir_posicoes_iniciais(n, m=N_PEOES):
+def _definir_posicoes_iniciais(n, m=N_PEOES):
     """
     Recebe um numero n (ate 9) de jogadores, retorna uma lista de n elementos,
     em que cada elemento eh uma lista das posicoes m das casas iniciais.
@@ -53,7 +53,7 @@ def __definir_posicoes_iniciais(n, m=N_PEOES):
     return
 
 
-def __definir_posicoes_seguras(n):
+def _definir_posicoes_seguras(n):
     """
     Recebe o numero de jogadores, e salva a lista de posicoes de casas seguras.
     """
@@ -65,7 +65,7 @@ def __definir_posicoes_seguras(n):
     return
 
 
-def __definir_posicoes_finais(n):
+def _definir_posicoes_finais(n):
     """
     Recebe o numero de jogadores, e salva a lista das ultimas posicoes (casa final).
     """
@@ -80,9 +80,9 @@ def iniciar_tabuleiro(n=N_CORES):
     Recebe o numero de jogadores, e inicia o tabuleiro. Retorna 0.
     """
     global cores_acrescentadas, N_CORES
-    __definir_posicoes_iniciais(n)
-    __definir_posicoes_seguras(n)
-    __definir_posicoes_finais(n)
+    _definir_posicoes_iniciais(n)
+    _definir_posicoes_seguras(n)
+    _definir_posicoes_finais(n)
     cores_acrescentadas = 0
     N_CORES = n
     return 0
@@ -148,7 +148,7 @@ def reiniciar_peao(id_peao):
     0 se sucesso,
     -1 se nao houver esse id.
     """
-    i = __achar_peao(id_peao)
+    i = _achar_peao(id_peao)
     if i == -1:
         return -1
 
@@ -167,7 +167,7 @@ def movimentacao_possivel(id_peao, mov):
     2 se finalizado
     -1 se nao existir esse id.
     """
-    i = __achar_peao(id_peao)
+    i = _achar_peao(id_peao)
     if i == -1:
         return -1
 
@@ -192,7 +192,7 @@ def movimentacao_possivel(id_peao, mov):
 
 def mover_peao(id_peao, mov):
     """
-    Move o peao. Admite-se que a movimentacao ja foi validade. Retorna:
+    Move o peao. Admite-se que a movimentacao ja foi valida. Retorna:
     posicao se o movimento foi feito com sucesso,
     -1 se o id nao existir,
     -2 se o peao chegou na ultima casa.
@@ -200,7 +200,7 @@ def mover_peao(id_peao, mov):
     OBS: nunca retornara a posicao da ultima casa.
     """
 
-    i = __achar_peao(id_peao)
+    i = _achar_peao(id_peao)
     if i == -1:
         return -1
 

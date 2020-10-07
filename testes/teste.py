@@ -6,7 +6,16 @@ import jogo.jogador
 class TestesPeao(unittest.TestCase):
     # def test_something(self):
     #     self.assertEqual(True, False)
+
+    def test_criacao_peao(self):
+        jogo.peao.limpar_peoes()
+        x = jogo.peao.criar_peao('amarelo')
+        # sera que o peao x tem a cor amarelo?
+        self.assertEqual(jogo.peao.acessar_peao(x), 'amarelo')
+        self.assertEqual(jogo.peao.acessar_peao(19999), '')
+
     """
+    
     def test_limpar_peao(self):
         self.assertEqual(jogo.peao.limpar_peoes(), 0, 'Limpando Peoes')
         jogo.peao.criar_peao('red', 0)
