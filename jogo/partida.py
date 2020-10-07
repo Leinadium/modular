@@ -1,4 +1,6 @@
-from entidades import *
+from . import dado
+from . import peao
+from . import tabuleiro
 from unittest.mock import Mock
 
 LISTA_CORES = ['yellow', 'green', 'red', 'blue']
@@ -8,13 +10,11 @@ escolher_peao = Mock(return_value=0)
 
 
 def criar_partida():
-    """Inicializa a partida, criando os peoes e jogadores.
-        Retorna 0."""
-    '''
-        peao.limpar_peoes()
-        peao.criar_peoes(cor)
-        tabuleiro.iniciar_tabuleiro(n)
-    '''
+    """
+    Inicializa a partida, criando os peoes e jogadores.
+    Retorna 0.
+    """
+
     peao.limpar_peoes()
     peoes_cor.clear()
     tabuleiro.iniciar_tabuleiro(len(LISTA_CORES))  # 4 cores
@@ -29,7 +29,13 @@ def criar_partida():
 
 
 def rodada(cor):
-    """Faz a rodada. 2 se vitoria, 1 se nao fez nada, 0 se foi sucesso, levanta erro caso erro."""
+    """
+    Faz a rodada.
+    2 se vitoria,
+    1 se nao fez nada,
+    0 se foi sucesso,
+    levanta erro caso erro.
+    """
 
     # rodando dado
     valor_dado = dado.jogar_dado()
