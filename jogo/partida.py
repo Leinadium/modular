@@ -1,6 +1,6 @@
-from . import dado
-from . import peao
-from . import tabuleiro
+from jogo import dado
+from jogo import peao
+from jogo import tabuleiro
 from unittest.mock import Mock
 
 LISTA_CORES = ['yellow', 'green', 'red', 'blue']
