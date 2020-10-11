@@ -79,7 +79,8 @@ def iniciar_tabuleiro(n=N_CORES):
     """
     Recebe o numero de jogadores, e inicia o tabuleiro. Retorna 0.
     """
-    global cores_acrescentadas, N_CORES
+    global cores_acrescentadas, N_CORES, tabela_peoes
+    tabela_peoes.clear()
     _definir_posicoes_iniciais(n)
     _definir_posicoes_seguras(n)
     _definir_posicoes_finais(n)
