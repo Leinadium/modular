@@ -1,12 +1,22 @@
 from jogo import dado
 from jogo import peao
 from jogo import tabuleiro
-from unittest.mock import Mock
+# from unittest.mock import Mock
 
 LISTA_CORES = ['yellow', 'green', 'red', 'blue']
 peoes_cor = dict()
 
-escolher_peao = Mock(return_value=0)
+# escolher_peao = Mock(return_value=0)
+
+
+def escolher_peao(lista):
+    print("Escolha o peão: ")
+    for i, a in enumerate(lista):
+        print('(digite %d): id %d' % (i, a))
+    x = input('Sua escolha: ')
+    while not (x.isdigit() and (0 <= int(x) < len(lista))):
+        x = input("Sua escolha: ")
+    return int(x)
 
 
 def criar_partida():
@@ -113,8 +123,10 @@ def rodar_partida():
         cor = next(g)
         print("Vez do %s" % cor)
         x = rodada(cor)
-        print("Resultado da rodada: %d\n" % x)
-        # input()
+        if x == 1:
+            print("Voce nao pode jogar nesta rodada.\n")
+        else:
+            print("Jogada realizada com sucesso. \n")
 
     print("%s ganhou" % cor)
     return 0
