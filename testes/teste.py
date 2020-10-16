@@ -1,7 +1,9 @@
 import unittest
+from unittest.mock import Mock
 import jogo.peao
 import jogo.tabuleiro
 import jogo.dado
+import jogo.partida
 
 
 class TestesPeao(unittest.TestCase):
@@ -105,6 +107,29 @@ class TestesDado(unittest.TestCase):
     def test_rodar_dado(self):
         x = jogo.dado.jogar_dado()
         self.assertTrue(1 <= x <= 6)
+
+
+class TestesPartida(unittest.TestCase):
+    def test_criar_partida(self):
+        x = jogo.partida.criar_partida()
+        self.assertEqual(x, 0, 'criando partida')
+
+    def test_rodada(self):
+        jogo.partida.criar_partida()
+        jogo.partida.escolher_peao = Mock(return_value=0)  # overwrite a escolha do peao
+        cores = jogo.partida.LISTA_CORES
+        for i in range(20):  # fazer 20 rodadas, ver se todas deram certo.
+            x = jogo.partida.rodada(cores[i % 4])
+            self.assertTrue(0 <= x <= 3, 'fazendo uma rodada')
+
+    def test_rodar_partida(self):
+        jogo.partida.criar_partida()
+        jogo.partida.escolher_peao = Mock(return_value=0) # overwrite a escolha do peao
+        x = jogo.partida.rodar_partida()
+        self.assertEqual(x, 0, 'rodando a partida')
+
+    # escolher_peao eh uma funcao temporaria (enquanto nao ha graficos)
+    # cor_da_rodada eh um gerador, nao uma funcao. Por isso nao ha testes
 
 
 if __name__ == '__main__':
