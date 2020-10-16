@@ -41,14 +41,18 @@ def criar_partida():
 def rodada(cor):
     """
     Faz a rodada.
+    3 se pode jogar novamente.
     2 se vitoria,
     1 se nao fez nada,
     0 se foi sucesso,
     levanta erro caso erro.
     """
 
+    jogar_novamente = False
     # rodando dado
     valor_dado = dado.jogar_dado()
+    if valor_dado == 6:
+        jogar_novamente = True
     print("Rodei o dado: %d" % valor_dado)
 
     # descobrindo os valores possiveis
@@ -67,7 +71,7 @@ def rodada(cor):
 
     print("Movimentos possiveis: %d" % len(lista_peoes_possiveis))
     if not lista_peoes_possiveis:
-        return 1
+        return 1 if not jogar_novamente else 3
 
     # escolhendo o peao a mover
     i = escolher_peao(lista_peoes_possiveis)
@@ -87,7 +91,7 @@ def rodada(cor):
     # verificar peao comido
     lista_peoes_posicao = tabuleiro.acessar_posicao(posicao_final)
     if lista_peoes_posicao == 0:  # casa protegida, nao come
-        return 0
+        return 0 if not jogar_novamente else 3
 
     for p in lista_peoes_posicao:
         cor_p = peao.acessar_peao(p)
@@ -96,7 +100,10 @@ def rodada(cor):
         else:
             print("Peao comido: %d" % p)
             tabuleiro.reiniciar_peao(p)  # comeu o peao
+            jogar_novamente = True
 
+    if jogar_novamente:
+        return 3
     return 0
 
 
@@ -120,7 +127,8 @@ def rodar_partida():
     x = -1
     cor = ''
     while x != 2:
-        cor = next(g)
+        if x != 3:  # 3 eh quando a pessoa pode jogar de novo
+            cor = next(g)
         print("Vez do %s" % cor)
         x = rodada(cor)
         if x == 1:
@@ -130,6 +138,3 @@ def rodar_partida():
 
     print("%s ganhou" % cor)
     return 0
-
-
-rodar_partida()
