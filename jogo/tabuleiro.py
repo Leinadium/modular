@@ -20,6 +20,10 @@ Esquema da numeracao das casas:
     i (jogador): 1 .. n, j: 0 .. 5 (onde 5 eh a casa final)
 
     casas seguras: 13*i e 13*i + 8, i: 0 .. 3
+
+05/10 (Daniel): Funcoes de acesso do tabuleiro
+06/10 (Daniel): Refatorando pequenos detalhes
+11/10 (Daniel): Corrigindo reset do tabuleiro
 """
 
 N_CORES = 4  # definindo o default do numero de jogadores como 4

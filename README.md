@@ -24,5 +24,4 @@ este capturou algum outro peão. A partida acaba quando um dos jogadores chega c
 
 ### Testes
 O arquivo de testes está na pasta `testes`, no arquivo `teste.py`. Ao rodar, ele automaticamente
-roda vários testes (31 testes no total, divididos em 10 etapas) para detectar se a funcionalidade atual
-do jogo está correta.
+roda vários testes para detectar se a funcionalidade atual do jogo está correta.

@@ -124,7 +124,7 @@ class TestesPartida(unittest.TestCase):
 
     def test_rodar_partida(self):
         jogo.partida.criar_partida()
-        jogo.partida.escolher_peao = Mock(return_value=0) # overwrite a escolha do peao
+        jogo.partida.escolher_peao = Mock(return_value=0)  # overwrite a escolha do peao
         x = jogo.partida.rodar_partida()
         self.assertEqual(x, 0, 'rodando a partida')
 

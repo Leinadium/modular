@@ -1,3 +1,18 @@
+"""
+Modulo Partida
+iniciar_tabuleiro()
+adicionar_peoes()
+acessar_posicao()
+reiniciar_peao()
+movimentacao_possivel()
+mover_peao()
+
+28/09 (Guilherme): Modulo criado
+05/10 (Daniel): Recomecando (reescrevendo tudo)
+16/10 (Daniel): Jogar novamente
+"""
+
+
 from jogo import dado
 from jogo import peao
 from jogo import tabuleiro
